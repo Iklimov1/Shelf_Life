@@ -17,4 +17,9 @@
     <string name="set_expiration_date">Set Expiration Date</string>
     <string name="start_now">Start Now</string>
     <string name="todo">TODO</string>
+    <string name="back_recipe_list">Back</string>
+    <string name="recipes">Recipes</string>
+    <string name="instructions">Instructions</string>
+    <string name="ingredients">Ingredients</string>
+    <string name="back_recipe_outpur">Back</string>
 </resources>

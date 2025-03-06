@@ -13,10 +13,10 @@ import android.view.ViewGroup;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link My_Pantry#newInstance} factory method to
+ * Use the {@link Recipe_List#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class My_Pantry extends Fragment {
+public class Recipe_List extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -27,7 +27,7 @@ public class My_Pantry extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public My_Pantry() {
+    public Recipe_List() {
         // Required empty public constructor
     }
 
@@ -37,11 +37,11 @@ public class My_Pantry extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment My_Pantry.
+     * @return A new instance of fragment Recipe_List.
      */
     // TODO: Rename and change types and number of parameters
-    public static My_Pantry newInstance(String param1, String param2) {
-        My_Pantry fragment = new My_Pantry();
+    public static Recipe_List newInstance(String param1, String param2) {
+        Recipe_List fragment = new Recipe_List();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -62,7 +62,7 @@ public class My_Pantry extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_my__pantry, container, false);
+        return inflater.inflate(R.layout.fragment_recipe__list, container, false);
     }
 
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -70,19 +70,10 @@ public class My_Pantry extends Fragment {
 
 
 
-        view.findViewById(R.id.Add_Item_Button).setOnClickListener(new View.OnClickListener() {
+        view.findViewById(R.id.Back_Recipe_list_Button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                IListener.GoToAdd_item();
-
-            }
-
-        });
-
-        view.findViewById(R.id.Recipe_Button).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                RListener.GoToRecipe_List();
+                BListener.Back();
 
             }
 
@@ -91,21 +82,14 @@ public class My_Pantry extends Fragment {
 
     }
 
-
-    ItemListner IListener;
-    RecipeListner RListener;
+    BackListner BListener;
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        IListener = (ItemListner) context;
-        RListener = (RecipeListner) context;
+        BListener = (BackListner) context;
     }
 
-    public interface ItemListner{
-        void GoToAdd_item();
-
-    }
-    public interface RecipeListner{
-        void GoToRecipe_List();
+    public interface BackListner{
+        void Back();
 
     }
 }

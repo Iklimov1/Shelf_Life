@@ -9,7 +9,8 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 public class MainActivity extends AppCompatActivity implements HomePage.WelcomeListner, My_Pantry.ItemListner,
-Add_Item.BackListner,Add_Item.ExperationListner,Calender.BackListner{
+Add_Item.BackListner,Add_Item.ExperationListner,Calender.BackListner,My_Pantry.RecipeListner
+,Recipe_List.BackListner,Recipe_Output.BackListner{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +55,16 @@ Add_Item.BackListner,Add_Item.ExperationListner,Calender.BackListner{
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.fragmentContainerView,new Calender())
+                .addToBackStack(null)
+                .commit();
+
+    }
+
+    @Override
+    public void GoToRecipe_List() {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragmentContainerView,new Recipe_List())
                 .addToBackStack(null)
                 .commit();
 
