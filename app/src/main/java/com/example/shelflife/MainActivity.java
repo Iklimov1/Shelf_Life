@@ -8,9 +8,11 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import java.time.LocalDate;
+
 public class MainActivity extends AppCompatActivity implements HomePage.WelcomeListner, My_Pantry.ItemListner,
 Add_Item.BackListner,Add_Item.ExperationListner,Calender.BackListner,My_Pantry.RecipeListner
-,Recipe_List.BackListner,Recipe_Output.BackListner{
+,Recipe_List.BackListner,Recipe_Output.BackListner,Calender.DateSubmitListener{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +69,17 @@ Add_Item.BackListner,Add_Item.ExperationListner,Calender.BackListner,My_Pantry.R
                 .replace(R.id.fragmentContainerView,new Recipe_List())
                 .addToBackStack(null)
                 .commit();
+
+    }
+
+    @Override
+    public void Submit_Experation_date(LocalDate expiration_date) {
+        Add_Item fragment = (Add_Item) getSupportFragmentManager().findFragmentByTag("Adding Item");
+
+        if(fragment != null){
+            fragment.setDate(expiration_date);
+        }
+        getSupportFragmentManager().popBackStack();
 
     }
 }

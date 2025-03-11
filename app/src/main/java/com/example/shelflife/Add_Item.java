@@ -1,6 +1,7 @@
 package com.example.shelflife;
 
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -10,6 +11,10 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+
+import java.time.LocalDate;
+import java.util.Date;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -26,6 +31,9 @@ public class Add_Item extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    LocalDate expiration_date;
+    TextView date_output;
+    boolean check = false;
 
     public Add_Item() {
         // Required empty public constructor
@@ -64,12 +72,32 @@ public class Add_Item extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_add__item, container, false);
     }
+    public void setDate(LocalDate datetemp){
+        expiration_date = datetemp;
+        check = true;
+    }
 
 
 
 
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        date_output =view.findViewById(R.id.Date_Output);
+        if(check){
+            String temp = null;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                temp = "Date: "+expiration_date.getYear()+" "+expiration_date.getMonth()+" "+expiration_date.getDayOfMonth();
+            }
+            date_output.setText(temp);
+
+
+        }
+        else{
+            String temp ="Date: N/A";
+            date_output.setText(temp);
+
+
+        }
 
 
 
