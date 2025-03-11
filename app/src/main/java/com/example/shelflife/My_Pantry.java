@@ -11,6 +11,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link My_Pantry#newInstance} factory method to
@@ -26,6 +28,7 @@ public class My_Pantry extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    ArrayList<Item> itemlist_My_Pantry = new ArrayList<Item>();
 
     public My_Pantry() {
         // Required empty public constructor
@@ -98,6 +101,10 @@ public class My_Pantry extends Fragment {
         super.onAttach(context);
         IListener = (ItemListner) context;
         RListener = (RecipeListner) context;
+    }
+
+    public void Add_item(Item newItem) {
+        itemlist_My_Pantry.add(newItem);
     }
 
     public interface ItemListner{

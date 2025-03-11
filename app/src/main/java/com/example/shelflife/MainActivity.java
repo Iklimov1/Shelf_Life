@@ -9,10 +9,12 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements HomePage.WelcomeListner, My_Pantry.ItemListner,
 Add_Item.BackListner,Add_Item.ExperationListner,Calender.BackListner,My_Pantry.RecipeListner
-,Recipe_List.BackListner,Recipe_Output.BackListner,Calender.DateSubmitListener{
+,Recipe_List.BackListner,Recipe_Output.BackListner,Calender.DateSubmitListener,Add_Item.SaveItemListener{
+    ArrayList<Item> itemlist = new ArrayList<Item>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +80,18 @@ Add_Item.BackListner,Add_Item.ExperationListner,Calender.BackListner,My_Pantry.R
 
         if(fragment != null){
             fragment.setDate(expiration_date);
+        }
+        getSupportFragmentManager().popBackStack();
+
+    }
+
+    @Override
+    public void Add_Item(Item new_item) {
+        itemlist.add(new_item);
+        My_Pantry fragment = (My_Pantry) getSupportFragmentManager().findFragmentByTag("main");
+
+        if(fragment != null){
+            fragment.Add_item(new_item);
         }
         getSupportFragmentManager().popBackStack();
 

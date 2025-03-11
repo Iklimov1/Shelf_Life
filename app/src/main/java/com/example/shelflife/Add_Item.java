@@ -11,7 +11,9 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.time.LocalDate;
 import java.util.Date;
@@ -31,9 +33,11 @@ public class Add_Item extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    LocalDate expiration_date;
+    LocalDate expiration_date = null;
     TextView date_output;
     boolean check = false;
+    EditText input_item_name;
+    EditText input_item_quantity;
 
     public Add_Item() {
         // Required empty public constructor
@@ -83,6 +87,8 @@ public class Add_Item extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         date_output =view.findViewById(R.id.Date_Output);
+        input_item_name=view.findViewById(R.id.Name_Input);
+        input_item_quantity=view.findViewById(R.id.Quantity_Input);
         if(check){
             String temp = null;
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -119,16 +125,57 @@ public class Add_Item extends Fragment {
 
         });
 
+        view.findViewById(R.id.Save_Button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LocalDate date_added = null;
+                String item_name = input_item_name.getText().toString();
+                String quantity_string = input_item_quantity.getText().toString();
+                double quantity = 0;
+                boolean quantcheck= true;
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    date_added = LocalDate.now();
+                }
+                try {
+                    quantity = Double.valueOf(quantity_string);
+                    quantcheck = false;
+                } catch(NumberFormatException exception) {
+                    Toast.makeText(getActivity(), "Please enter valid Quantity", Toast.LENGTH_SHORT).show();
+
+                }
+                if (quantcheck){
+
+                }
+
+                else if(quantity <= 0){
+                    Toast.makeText(getActivity(), "Please enter a Quantity that is greater then 0", Toast.LENGTH_SHORT).show();
+                } else if (item_name.isEmpty()) {
+                    Toast.makeText(getActivity(), "Please enter the name of the item", Toast.LENGTH_SHORT).show();
+                } else if (expiration_date == null) {
+                    Toast.makeText(getActivity(), "Please select an expiration date", Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    Item item_to_add= new Item(item_name,date_added,expiration_date,quantity);
+                    SIListener.Add_Item(item_to_add);
+                }
+
+
+            }
+
+        });
+
 
     }
 
 
     ExperationListner EListener;
     BackListner BListener;
+    SaveItemListener SIListener;
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         EListener = (ExperationListner) context;
         BListener = (BackListner) context;
+        SIListener = (SaveItemListener) context;
     }
 
     public interface ExperationListner{
@@ -137,6 +184,10 @@ public class Add_Item extends Fragment {
     }
     public interface BackListner{
         void Back();
+
+    }
+    public interface SaveItemListener{
+        void Add_Item(Item new_item);
 
     }
 }

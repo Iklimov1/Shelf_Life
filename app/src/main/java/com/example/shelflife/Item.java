@@ -6,12 +6,12 @@ import java.time.LocalDate;
 
 public class Item implements Serializable {
     private String Name;
-    private float quantity;
+    private double quantity;
     private LocalDate date_added;
     private LocalDate expiration_date;
     private String Comment;
 
-    public Item(String name, LocalDate date_added, LocalDate expiration_date,float quantity ){
+    public Item(String name, LocalDate date_added, LocalDate expiration_date,double quantity ){
         this.Name = name;
 
         this.date_added = date_added;
@@ -34,8 +34,8 @@ public class Item implements Serializable {
     public LocalDate getexpiration_date(){return expiration_date;}
     public void setexpiration_date(LocalDate expiration_date){this.expiration_date= expiration_date;}
     public LocalDate getdate_added(){return date_added;}
-    public float getquantity(){return quantity;}
-    public void setquantity(float quantity){this.quantity = quantity;}
+    public double getquantity(){return quantity;}
+    public void setquantity(double quantity){this.quantity = quantity;}
 
 
 }
