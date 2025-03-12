@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 
 import java.util.ArrayList;
 
@@ -29,6 +30,8 @@ public class My_Pantry extends Fragment {
     private String mParam1;
     private String mParam2;
     ArrayList<Item> itemlist_My_Pantry = new ArrayList<Item>();
+    Item_Adapter adapter;
+    ListView Item_List;
 
     public My_Pantry() {
         // Required empty public constructor
@@ -70,6 +73,10 @@ public class My_Pantry extends Fragment {
 
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        Item_List = view.findViewById(R.id.listView);
+
+        adapter = new Item_Adapter(getActivity(),R.layout.item_row_layout,itemlist_My_Pantry);
+        Item_List.setAdapter(adapter);
 
 
 
