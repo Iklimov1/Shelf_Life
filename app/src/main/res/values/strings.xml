@@ -22,4 +22,8 @@
     <string name="instructions">Instructions</string>
     <string name="ingredients">Ingredients</string>
     <string name="back_recipe_outpur">Back</string>
+    <string name="back_edit">Back</string>
+    <string name="submit">Submit</string>
+    <string name="editing_item">Editing Item</string>
+    <string name="calender">Calender</string>
 </resources>

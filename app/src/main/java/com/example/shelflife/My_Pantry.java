@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -92,34 +93,52 @@ public class My_Pantry extends Fragment {
         view.findViewById(R.id.Recipe_Button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                RListener.GoToRecipe_List();
+                IListener.GoToRecipe_List();
 
             }
 
         });
+        Item_List.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Item selection = itemlist_My_Pantry.get(position);
+                IListener.gotoitemedit(selection);
+
+
+            }
+        });
+
 
 
     }
 
 
     ItemListner IListener;
-    RecipeListner RListener;
+
+
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         IListener = (ItemListner) context;
-        RListener = (RecipeListner) context;
+
+
     }
 
     public void Add_item(Item newItem) {
         itemlist_My_Pantry.add(newItem);
     }
 
-    public interface ItemListner{
-        void GoToAdd_item();
+    public void Edit_item(Item oldItem, Item newItem) {
+        itemlist_My_Pantry.remove(oldItem);
+        itemlist_My_Pantry.add(newItem);
 
     }
-    public interface RecipeListner{
+
+    public interface ItemListner{
+        void GoToAdd_item();
+        void gotoitemedit(Item item);
         void GoToRecipe_List();
 
     }
+
+
 }

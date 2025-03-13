@@ -12,9 +12,11 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements HomePage.WelcomeListner, My_Pantry.ItemListner,
-Add_Item.BackListner,Add_Item.ExperationListner,Calender.BackListner,My_Pantry.RecipeListner
-,Recipe_List.BackListner,Recipe_Output.BackListner,Calender.DateSubmitListener,Add_Item.SaveItemListener{
-    ArrayList<Item> itemlist = new ArrayList<Item>();
+Add_Item.BackListner,Add_Item.ExperationListner, Calender.BackListner,Recipe_List.BackListner,
+        Recipe_Output.BackListner,Calender.DateSubmitListener,Add_Item.SaveItemListener,Edit_Item.EditListner,
+        Calender_edit.CalenderEditListner
+{
+    //ArrayList<Item> itemlist = new ArrayList<Item>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +51,47 @@ Add_Item.BackListner,Add_Item.ExperationListner,Calender.BackListner,My_Pantry.R
     }
 
     @Override
+    public void gotoitemedit(Item item) {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragmentContainerView,new Edit_Item().newInstance(item),"Editing Item")
+                .addToBackStack(null)
+                .commit();
+
+    }
+
+    @Override
     public void Back() {
+        getSupportFragmentManager().popBackStack();
+
+    }
+
+    @Override
+    public void Send_new_date(LocalDate date) {
+        Edit_Item fragment = (Edit_Item) getSupportFragmentManager().findFragmentByTag("Editing Item");
+
+        if(fragment != null){
+            fragment.setDate(date);
+        }
+        getSupportFragmentManager().popBackStack();
+    }
+
+    @Override
+    public void to_edit_Calender(LocalDate new_date) {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragmentContainerView,new Calender_edit().newInstance(new_date))
+                .addToBackStack(null)
+                .commit();
+    }
+
+    @Override
+    public void edit_item(Item old_item, Item new_item) {
+        My_Pantry fragment = (My_Pantry) getSupportFragmentManager().findFragmentByTag("main");
+
+        if(fragment != null){
+            fragment.Edit_item(old_item,new_item);
+        }
         getSupportFragmentManager().popBackStack();
 
     }
@@ -87,7 +129,7 @@ Add_Item.BackListner,Add_Item.ExperationListner,Calender.BackListner,My_Pantry.R
 
     @Override
     public void Add_Item(Item new_item) {
-        itemlist.add(new_item);
+        //itemlist.add(new_item);
         My_Pantry fragment = (My_Pantry) getSupportFragmentManager().findFragmentByTag("main");
 
         if(fragment != null){
