@@ -1,6 +1,7 @@
 package com.example.shelflife;
 
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -12,7 +13,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 /**
@@ -38,15 +41,7 @@ public class My_Pantry extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment My_Pantry.
-     */
-    // TODO: Rename and change types and number of parameters
+
     public static My_Pantry newInstance(String param1, String param2) {
         My_Pantry fragment = new My_Pantry();
         Bundle args = new Bundle();
@@ -125,11 +120,14 @@ public class My_Pantry extends Fragment {
 
     public void Add_item(Item newItem) {
         itemlist_My_Pantry.add(newItem);
+        expiration_toast(itemlist_My_Pantry);
+
     }
 
     public void Edit_item(Item oldItem, Item newItem) {
         itemlist_My_Pantry.remove(oldItem);
         itemlist_My_Pantry.add(newItem);
+        expiration_toast(itemlist_My_Pantry);
 
     }
 
@@ -137,6 +135,28 @@ public class My_Pantry extends Fragment {
         void GoToAdd_item();
         void gotoitemedit(Item item);
         void GoToRecipe_List();
+
+    }
+
+    public void expiration_toast(ArrayList<Item> Items_to_check){
+        int checker = 0;
+
+        for(int i = 0; i<Items_to_check.size();i++){
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                checker = Items_to_check.get(i).getexpiration_date().compareTo(LocalDate.now());
+            }
+
+
+            if(checker <= 7){
+                Toast.makeText(getActivity(), "Warning! " + Items_to_check.get(i).getName() + " is about to expire!", Toast.LENGTH_SHORT).show();
+
+
+                }
+
+
+
+        }
 
     }
 
