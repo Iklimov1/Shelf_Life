@@ -31,6 +31,7 @@ public class Item_Adapter extends ArrayAdapter<Item> {
         TextView expiration_date = convertView.findViewById(R.id.Expiration_date);
         String temp = "";
 
+        assert item != null;
         Item_name.setText(item.getName());
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             temp = item.getdate_added().getMonth()+" " +item.getdate_added().getDayOfMonth()+" "+item.getdate_added().getYear();

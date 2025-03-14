@@ -11,7 +11,6 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -30,10 +29,7 @@ public class My_Pantry extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-    ArrayList<Item> itemlist_My_Pantry = new ArrayList<Item>();
+    ArrayList<Item> itemlist_My_Pantry = new ArrayList<>();
     Item_Adapter adapter;
     ListView Item_List;
 
@@ -54,10 +50,7 @@ public class My_Pantry extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+
     }
 
     @Override
@@ -71,36 +64,19 @@ public class My_Pantry extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         Item_List = view.findViewById(R.id.listView);
 
-        adapter = new Item_Adapter(getActivity(),R.layout.item_row_layout,itemlist_My_Pantry);
+        adapter = new Item_Adapter(requireActivity(),R.layout.item_row_layout,itemlist_My_Pantry);
         Item_List.setAdapter(adapter);
 
 
 
-        view.findViewById(R.id.Add_Item_Button).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                IListener.GoToAdd_item();
+        view.findViewById(R.id.Add_Item_Button).setOnClickListener(v -> IListener.GoToAdd_item());
 
-            }
-
-        });
-
-        view.findViewById(R.id.Recipe_Button).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                IListener.GoToRecipe_List();
-
-            }
-
-        });
-        Item_List.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Item selection = itemlist_My_Pantry.get(position);
-                IListener.gotoitemedit(selection);
+        view.findViewById(R.id.Recipe_Button).setOnClickListener(v -> IListener.GoToRecipe_List(itemlist_My_Pantry));
+        Item_List.setOnItemClickListener((parent, view1, position, id) -> {
+            Item selection = itemlist_My_Pantry.get(position);
+            IListener.gotoitemedit(selection);
 
 
-            }
         });
 
 
@@ -139,30 +115,20 @@ public class My_Pantry extends Fragment {
     public interface ItemListner{
         void GoToAdd_item();
         void gotoitemedit(Item item);
-        void GoToRecipe_List();
+        void GoToRecipe_List(ArrayList<Item> itemlist_My_Pantry);
 
     }
 
     public void expiration_toast(ArrayList<Item> Items_to_check){
         int checker = 0;
-
         for(int i = 0; i<Items_to_check.size();i++){
-
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 checker = Items_to_check.get(i).getexpiration_date().compareTo(LocalDate.now());
             }
-
-
             if(checker <= 7){
                 Toast.makeText(getActivity(), "Warning! " + Items_to_check.get(i).getName() + " is about to expire!", Toast.LENGTH_SHORT).show();
-
-
                 }
-
-
-
         }
-
     }
 
 

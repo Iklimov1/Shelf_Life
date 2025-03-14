@@ -11,6 +11,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link Recipe_List#newInstance} factory method to
@@ -18,33 +20,18 @@ import android.view.ViewGroup;
  */
 public class Recipe_List extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    ArrayList<Item> Items_to_check;
 
     public Recipe_List() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment Recipe_List.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static Recipe_List newInstance(String param1, String param2) {
+
+    public static Recipe_List newInstance(ArrayList<Item> itemlist_My_Pantry) {
         Recipe_List fragment = new Recipe_List();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        args.putSerializable("ARG_PARAM_userinfo", itemlist_My_Pantry);
         fragment.setArguments(args);
         return fragment;
     }
@@ -53,8 +40,7 @@ public class Recipe_List extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            Items_to_check = (ArrayList<Item>) getArguments().getSerializable("ARG_PARAM_userinfo");
         }
     }
 
@@ -67,28 +53,17 @@ public class Recipe_List extends Fragment {
 
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-
-
-        view.findViewById(R.id.Back_Recipe_list_Button).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                BListener.Back();
-
-            }
-
-        });
-
+        view.findViewById(R.id.Back_Recipe_list_Button).setOnClickListener(v -> RListener.Back());
 
     }
 
-    BackListner BListener;
+    RecipeListener RListener;
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        BListener = (BackListner) context;
+        RListener = (RecipeListener) context;
     }
 
-    public interface BackListner{
+    public interface RecipeListener{
         void Back();
 
     }

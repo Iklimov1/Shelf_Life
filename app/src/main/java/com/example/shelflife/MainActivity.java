@@ -12,7 +12,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements HomePage.WelcomeListner, My_Pantry.ItemListner,
-Add_Item.BackListner,Add_Item.ExperationListner, Calender.BackListner,Recipe_List.BackListner,
+Add_Item.BackListner,Add_Item.ExperationListner, Calender.BackListner,Recipe_List.RecipeListener,
         Recipe_Output.BackListner,Calender.DateSubmitListener,Add_Item.SaveItemListener,Edit_Item.EditListner,
         Calender_edit.CalenderEditListner
 {
@@ -117,10 +117,10 @@ Add_Item.BackListner,Add_Item.ExperationListner, Calender.BackListner,Recipe_Lis
     }
 
     @Override
-    public void GoToRecipe_List() {
+    public void GoToRecipe_List(ArrayList<Item> itemlist_My_Pantry) {
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.fragmentContainerView,new Recipe_List())
+                .replace(R.id.fragmentContainerView,new Recipe_List().newInstance(itemlist_My_Pantry))
                 .addToBackStack(null)
                 .commit();
 

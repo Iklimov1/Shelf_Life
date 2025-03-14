@@ -14,7 +14,6 @@ import android.view.ViewGroup;
 import android.widget.CalendarView;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -29,8 +28,7 @@ public class Calender extends Fragment {
     private static final String ARG_PARAM2 = "param2";
 
     // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+
     CalendarView calendar;
     LocalDate expiration_date;
 
@@ -38,15 +36,7 @@ public class Calender extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment Calender.
-     */
-    // TODO: Rename and change types and number of parameters
+
     public static Calender newInstance(String param1, String param2) {
         Calender fragment = new Calender();
         Bundle args = new Bundle();
@@ -60,8 +50,7 @@ public class Calender extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+
         }
     }
 
@@ -82,36 +71,16 @@ public class Calender extends Fragment {
         }
 
 
-        view.findViewById(R.id.Calender_Back_Button).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                BListener.Back();
+        view.findViewById(R.id.Calender_Back_Button).setOnClickListener(v -> BListener.Back());
 
-            }
-
-        });
-
-        view.findViewById(R.id.Calender_Set_Date_Button).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                DSListener.Submit_Experation_date(expiration_date);
+        view.findViewById(R.id.Calender_Set_Date_Button).setOnClickListener(v -> DSListener.Submit_Experation_date(expiration_date));
 
 
-            }
-
-        });
+        calendar.setOnDateChangeListener((view1, year, month, dayOfMonth) -> {
 
 
-        calendar.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
-
-            @Override
-            public void onSelectedDayChange(CalendarView view, int year, int month,
-                                            int dayOfMonth) {
-
-
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    expiration_date = LocalDate.of(year, month+1, dayOfMonth);
-                }
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                expiration_date = LocalDate.of(year, month+1, dayOfMonth);
             }
         });
 

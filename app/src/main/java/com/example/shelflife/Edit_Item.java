@@ -26,8 +26,6 @@ public class Edit_Item extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
     // TODO: Rename and change types of parameters
     private Item item;
@@ -91,58 +89,30 @@ public View onCreateView(LayoutInflater inflater, ViewGroup container,
 
 
 
-        view.findViewById(R.id.Back_detail_button).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                EListener.Back();
+        view.findViewById(R.id.Back_detail_button).setOnClickListener(v -> EListener.Back());
+        view.findViewById(R.id.Calender_edit_button).setOnClickListener(v -> EListener.to_edit_Calender(date));
+        view.findViewById(R.id.Submit_detail_button).setOnClickListener(v -> {
+            boolean quantcheck = true;
+            try {
+                quantity = Double.valueOf(input_item_quantity.getText().toString());
+                quantcheck = false;
+            } catch (NumberFormatException exception) {
+                Toast.makeText(getActivity(), "Please enter valid Quantity", Toast.LENGTH_SHORT).show();
 
+            }
+            if (quantcheck) {
+
+            } else if (quantity <= 0) {
+                Toast.makeText(getActivity(), "Please enter a Quantity that is greater then 0", Toast.LENGTH_SHORT).show();
+            } else if (input_item_name.getText().toString().isEmpty()) {
+                Toast.makeText(getActivity(), "Please enter the name of the item", Toast.LENGTH_SHORT).show();
+            } else {
+                Item new_item = new Item(input_item_name.getText().toString(), old_item.getdate_added(), date, quantity);
+                EListener.edit_item(old_item, new_item);
             }
 
         });
-        view.findViewById(R.id.Calender_edit_button).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                EListener.to_edit_Calender(date);
-
-            }
-
-        });
-        view.findViewById(R.id.Submit_detail_button).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                boolean quantcheck = true;
-                try {
-                    quantity = Double.valueOf(input_item_quantity.getText().toString());
-                    quantcheck = false;
-                } catch (NumberFormatException exception) {
-                    Toast.makeText(getActivity(), "Please enter valid Quantity", Toast.LENGTH_SHORT).show();
-
-                }
-                if (quantcheck) {
-
-                } else if (quantity <= 0) {
-                    Toast.makeText(getActivity(), "Please enter a Quantity that is greater then 0", Toast.LENGTH_SHORT).show();
-                } else if (input_item_name.getText().toString().isEmpty()) {
-                    Toast.makeText(getActivity(), "Please enter the name of the item", Toast.LENGTH_SHORT).show();
-                } else {
-                    Item new_item = new Item(input_item_name.getText().toString(), old_item.getdate_added(), date, quantity);
-                    EListener.edit_item(old_item, new_item);
-                }
-
-            }
-
-
-
-        });
-        view.findViewById(R.id.Delete_edit_button).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                EListener.delete_item(old_item);
-
-
-            }
-
-        });
+        view.findViewById(R.id.Delete_edit_button).setOnClickListener(v -> EListener.delete_item(old_item));
 
     }
 
