@@ -134,6 +134,15 @@ public View onCreateView(LayoutInflater inflater, ViewGroup container,
 
 
         });
+        view.findViewById(R.id.Delete_edit_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EListener.delete_item(old_item);
+
+
+            }
+
+        });
 
     }
 
@@ -156,6 +165,7 @@ EditListner EListener;
         void Back();
         void to_edit_Calender(LocalDate new_date);
         void edit_item(Item old_item,Item new_item);
+        void delete_item(Item old_item);
 
 
     }

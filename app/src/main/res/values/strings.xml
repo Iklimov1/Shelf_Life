@@ -26,4 +26,7 @@
     <string name="submit">Submit</string>
     <string name="editing_item">Editing Item</string>
     <string name="calender">Calender</string>
+    <string name="delete">Delete</string>
+    <string name="item_name_edit">Item Name</string>
+    <string name="textview_edit">TextView</string>
 </resources>

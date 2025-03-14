@@ -70,7 +70,7 @@
             android:id="@+id/Date_detail_output"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="TextView"
+            android:text="@string/textview_edit"
             android:textSize="24sp"
             app:layout_constraintBottom_toBottomOf="@+id/textView14"
             app:layout_constraintStart_toEndOf="@+id/textView14" />
@@ -81,7 +81,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="-10dp"
             android:ems="10"
-            android:hint="Item Name"
+            android:hint="@string/item_name_edit"
             android:inputType="text"
             app:layout_constraintBottom_toBottomOf="@+id/textView13"
             app:layout_constraintStart_toEndOf="@+id/textView13" />
@@ -105,6 +105,15 @@
             app:layout_constraintBottom_toBottomOf="@+id/Date_detail_output"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/Date_detail_output" />
+
+        <Button
+            android:id="@+id/Delete_edit_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/delete"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/Submit_detail_button"
+            app:layout_constraintStart_toEndOf="@+id/Back_detail_button" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

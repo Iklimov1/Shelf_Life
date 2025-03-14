@@ -131,6 +131,11 @@ public class My_Pantry extends Fragment {
 
     }
 
+    public void delete_item(Item oldItem) {
+        itemlist_My_Pantry.remove(oldItem);
+        expiration_toast(itemlist_My_Pantry);
+    }
+
     public interface ItemListner{
         void GoToAdd_item();
         void gotoitemedit(Item item);

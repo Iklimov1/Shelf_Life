@@ -97,6 +97,16 @@ Add_Item.BackListner,Add_Item.ExperationListner, Calender.BackListner,Recipe_Lis
     }
 
     @Override
+    public void delete_item(Item old_item) {
+        My_Pantry fragment = (My_Pantry) getSupportFragmentManager().findFragmentByTag("main");
+
+        if(fragment != null){
+            fragment.delete_item(old_item);
+        }
+        getSupportFragmentManager().popBackStack();
+    }
+
+    @Override
     public void GoToCalender() {
         getSupportFragmentManager()
                 .beginTransaction()
