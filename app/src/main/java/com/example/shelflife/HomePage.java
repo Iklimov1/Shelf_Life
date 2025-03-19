@@ -83,13 +83,13 @@ public class HomePage extends Fragment {
     }
 
 
-    WelcomeListner WListener;
+    WelcomeListener WListener;
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        WListener = (WelcomeListner) context;
+        WListener = (WelcomeListener) context;
     }
 
-    public interface WelcomeListner{
+    public interface WelcomeListener{
         void GoToMy_Pantry();
 
     }

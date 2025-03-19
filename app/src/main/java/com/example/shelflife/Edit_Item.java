@@ -116,12 +116,12 @@ public View onCreateView(LayoutInflater inflater, ViewGroup container,
 
     }
 
-EditListner EListener;
+EditListener EListener;
 
 
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        EListener = (EditListner) context;
+        EListener = (EditListener) context;
 
 
     }
@@ -131,7 +131,7 @@ EditListner EListener;
     }
 
 
-    public interface EditListner{
+    public interface EditListener{
         void Back();
         void to_edit_Calender(LocalDate new_date);
         void edit_item(Item old_item,Item new_item);

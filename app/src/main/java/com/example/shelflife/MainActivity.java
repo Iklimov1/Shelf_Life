@@ -11,10 +11,10 @@ import androidx.core.view.WindowInsetsCompat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity implements HomePage.WelcomeListner, My_Pantry.ItemListner,
-Add_Item.BackListner,Add_Item.ExperationListner, Calender.BackListner,Recipe_List.RecipeListener,
-        Recipe_Output.BackListner,Calender.DateSubmitListener,Add_Item.SaveItemListener,Edit_Item.EditListner,
-        Calender_edit.CalenderEditListner
+public class MainActivity extends AppCompatActivity implements HomePage.WelcomeListener, My_Pantry.ItemListener,
+Add_Item.BackListener,Add_Item.ExpirationListener, Calender.BackListener,Recipe_List.RecipeListener,
+        Recipe_Output.BackListener,Calender.DateSubmitListener,Add_Item.SaveItemListener,Edit_Item.EditListener,
+        Calender_edit.CalenderEditListener
 {
     //ArrayList<Item> itemlist = new ArrayList<Item>();
 
@@ -127,7 +127,7 @@ Add_Item.BackListner,Add_Item.ExperationListner, Calender.BackListner,Recipe_Lis
     }
 
     @Override
-    public void Submit_Experation_date(LocalDate expiration_date) {
+    public void Submit_Expiration_date(LocalDate expiration_date) {
         Add_Item fragment = (Add_Item) getSupportFragmentManager().findFragmentByTag("Adding Item");
 
         if(fragment != null){

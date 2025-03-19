@@ -84,12 +84,12 @@ public class My_Pantry extends Fragment {
     }
 
 
-    ItemListner IListener;
+    ItemListener IListener;
 
 
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        IListener = (ItemListner) context;
+        IListener = (ItemListener) context;
 
 
     }
@@ -112,7 +112,7 @@ public class My_Pantry extends Fragment {
         expiration_toast(itemlist_My_Pantry);
     }
 
-    public interface ItemListner{
+    public interface ItemListener{
         void GoToAdd_item();
         void gotoitemedit(Item item);
         void GoToRecipe_List(ArrayList<Item> itemlist_My_Pantry);

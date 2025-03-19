@@ -73,7 +73,7 @@ public class Calender extends Fragment {
 
         view.findViewById(R.id.Calender_Back_Button).setOnClickListener(v -> BListener.Back());
 
-        view.findViewById(R.id.Calender_Set_Date_Button).setOnClickListener(v -> DSListener.Submit_Experation_date(expiration_date));
+        view.findViewById(R.id.Calender_Set_Date_Button).setOnClickListener(v -> DSListener.Submit_Expiration_date(expiration_date));
 
 
         calendar.setOnDateChangeListener((view1, year, month, dayOfMonth) -> {
@@ -88,25 +88,25 @@ public class Calender extends Fragment {
     }
 
 
-    BackListner BListener;
+    BackListener BListener;
     DateSubmitListener DSListener;
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
 
-        BListener = (BackListner) context;
+        BListener = (BackListener) context;
         DSListener = (DateSubmitListener) context;
     }
 
 
 
 
-    public interface BackListner{
+    public interface BackListener{
         void Back();
 
     }
 
     public interface DateSubmitListener{
-        void Submit_Experation_date(LocalDate expiration_date);
+        void Submit_Expiration_date(LocalDate expiration_date);
 
     }
 }

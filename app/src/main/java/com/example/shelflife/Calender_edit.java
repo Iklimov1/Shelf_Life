@@ -114,19 +114,19 @@ public class Calender_edit extends Fragment {
     }
 
 
-    CalenderEditListner CEListener;
+    CalenderEditListener CEListener;
 
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
 
-        CEListener = (CalenderEditListner) context;
+        CEListener = (CalenderEditListener) context;
 
     }
 
 
 
 
-    public interface CalenderEditListner{
+    public interface CalenderEditListener{
         void Back();
         void Send_new_date(LocalDate date);
 

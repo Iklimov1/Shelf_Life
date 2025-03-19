@@ -75,7 +75,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
-            android:text="@string/set_experation_date"
+            android:text="@string/set_expiration_date"
             app:layout_constraintBottom_toTopOf="@+id/Quantity_Input"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/Date_Output" />

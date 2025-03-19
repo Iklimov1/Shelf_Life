@@ -81,13 +81,13 @@ public class Recipe_Output extends Fragment {
 
     }
 
-    BackListner BListener;
+    BackListener BListener;
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        BListener = (BackListner) context;
+        BListener = (BackListener) context;
     }
 
-    public interface BackListner{
+    public interface BackListener{
         void Back();
 
     }
