@@ -14,17 +14,23 @@
             android:id="@+id/Back_detail_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
             android:text="@string/back_edit"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/Delete_edit_button"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent" />
 
         <Button
             android:id="@+id/Submit_detail_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
             android:text="@string/submit"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/Delete_edit_button" />
 
         <TextView
             android:id="@+id/textView8"
@@ -101,6 +107,7 @@
             android:id="@+id/Calender_edit_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
             android:text="@string/calender"
             app:layout_constraintBottom_toBottomOf="@+id/Date_detail_output"
             app:layout_constraintEnd_toEndOf="parent"
@@ -110,9 +117,11 @@
             android:id="@+id/Delete_edit_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
             android:text="@string/delete"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/Submit_detail_button"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/Back_detail_button" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -23,36 +23,45 @@
 
         <Button
             android:id="@+id/Save_Button"
-            android:layout_width="wrap_content"
+            android:layout_width="125dp"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="50dp"
+            android:layout_marginBottom="10dp"
             android:text="@string/save"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/Back_Button" />
 
         <Button
             android:id="@+id/Back_Button"
-            android:layout_width="wrap_content"
+            android:layout_width="125dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="50dp"
+            android:layout_marginBottom="10dp"
             android:text="@string/back"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/Save_Button"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
             app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
             android:id="@+id/Date_Output"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:text="@string/textview"
+            android:layout_marginStart="32dp"
+            android:text="@string/eDate"
             android:textSize="20sp"
-            app:layout_constraintStart_toStartOf="@+id/Name_Input"
-            app:layout_constraintTop_toBottomOf="@+id/Name_Input" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/Quantity_Input" />
 
         <EditText
             android:id="@+id/Name_Input"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
-            android:layout_marginTop="60dp"
+            android:layout_marginTop="40dp"
             android:ems="10"
             android:hint="@string/item_name"
             android:inputType="text"
@@ -63,21 +72,22 @@
             android:id="@+id/Quantity_Input"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
+            android:layout_marginStart="32dp"
             android:ems="10"
             android:hint="@string/quantity"
             android:inputType="text"
-            app:layout_constraintStart_toStartOf="@+id/Date_Output"
-            app:layout_constraintTop_toBottomOf="@+id/Date_Output" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/Name_Input" />
 
         <Button
             android:id="@+id/Calender_Button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="15dp"
             android:text="@string/set_expiration_date"
-            app:layout_constraintBottom_toTopOf="@+id/Quantity_Input"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/Date_Output" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

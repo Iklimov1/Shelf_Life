@@ -12,19 +12,25 @@
 
         <Button
             android:id="@+id/Calender_Back_Button"
-            android:layout_width="wrap_content"
+            android:layout_width="125dp"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
             android:text="@string/back_Calender"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/Calender_Set_Date_Button"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent" />
 
         <Button
             android:id="@+id/Calender_Set_Date_Button"
-            android:layout_width="wrap_content"
+            android:layout_width="125dp"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
             android:text="@string/set_date"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/Calender_Back_Button" />
 
         <TextView
             android:id="@+id/textView6"

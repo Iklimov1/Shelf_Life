@@ -8,14 +8,16 @@
     <TextView
         android:id="@+id/Item_output"
         android:layout_width="140dp"
-        android:layout_height="70dp"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/Date_Added"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="@+id/Expiration_date"
         app:layout_constraintEnd_toStartOf="@+id/Expiration_date"
         app:layout_constraintStart_toEndOf="@+id/Item_output"
@@ -24,7 +26,8 @@
     <TextView
         android:id="@+id/Expiration_date"
         android:layout_width="140dp"
-        android:layout_height="70dp"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
