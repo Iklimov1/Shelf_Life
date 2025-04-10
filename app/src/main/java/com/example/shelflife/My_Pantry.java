@@ -14,6 +14,17 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.lang.reflect.Type;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -63,6 +74,7 @@ public class My_Pantry extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         Item_List = view.findViewById(R.id.listView);
+       // loadItemList();
 
         adapter = new Item_Adapter(requireActivity(),R.layout.item_row_layout,itemlist_My_Pantry);
         Item_List.setAdapter(adapter);
@@ -97,6 +109,8 @@ public class My_Pantry extends Fragment {
     public void Add_item(Item newItem) {
         itemlist_My_Pantry.add(newItem);
         expiration_toast(itemlist_My_Pantry);
+        saveItemList();
+        adapter.notifyDataSetChanged();
 
     }
 
@@ -131,5 +145,46 @@ public class My_Pantry extends Fragment {
         }
     }
 
+    public boolean saveItemList(){
+        Gson gson = new Gson();
+        String json = gson.toJson(itemlist_My_Pantry);
+        try{
+            FileOutputStream fos = requireActivity().openFileOutput("pantry_items.json", Context.MODE_PRIVATE);
+            fos.write(json.getBytes());
+            fos.close();
+        } catch(IOException e){
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+    public boolean loadItemList(){
+        try{
+            FileInputStream fis = requireActivity().openFileInput("pantry_items.json");
+            InputStreamReader isr = new InputStreamReader(fis);
+            BufferedReader reader = new BufferedReader(isr);
+
+            StringBuilder jsonBuilder = new StringBuilder();
+            String line;
+            while((line = reader.readLine()) != null){
+                jsonBuilder.append(line);
+            }
+            reader.close();
+            String json = jsonBuilder.toString();
+            Type type = new TypeToken<ArrayList<Item>>(){}.getType();
+            itemlist_My_Pantry = new Gson().fromJson(json, type);
+
+
+        }catch (FileNotFoundException e){
+            e.printStackTrace();
+            itemlist_My_Pantry = new ArrayList<>();
+            return false;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
 
 }

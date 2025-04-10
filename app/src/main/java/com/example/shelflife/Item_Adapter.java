@@ -2,12 +2,14 @@ package com.example.shelflife;
 
 import android.content.Context;
 import android.os.Build;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import androidx.annotation.LongDef;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
@@ -34,7 +36,9 @@ public class Item_Adapter extends ArrayAdapter<Item> {
         assert item != null;
         Item_name.setText(item.getName());
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            temp = item.getdate_added().getMonth()+" " +item.getdate_added().getDayOfMonth()+" "+item.getdate_added().getYear();
+
+            temp = item.getdate_added().getMonth() +" " +item.getdate_added().getDayOfMonth()+" "+item.getdate_added().getYear();
+
         }
         date_added.setText(temp);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
