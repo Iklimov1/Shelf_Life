@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,18 +16,28 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 
-import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.reflect.Type;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLConnection;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Objects;
+
+import javax.net.ssl.HttpsURLConnection;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -62,6 +73,23 @@ public class My_Pantry extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        // Example ingredients, remove in production
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            itemlist_My_Pantry.add(new Item("apples",LocalDate.now(), LocalDate.now(), 4));
+            itemlist_My_Pantry.add(new Item("flour",LocalDate.now(), LocalDate.now(), 4));
+            itemlist_My_Pantry.add(new Item("sugar",LocalDate.now(), LocalDate.now(), 4));
+        }
+
+        // getRecipes method must be called from a separate thread, so that it doesn't throw android.os.NetworkOnMainThreadException
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                ArrayList<Recipe> rs= getRecipes(itemlist_My_Pantry);
+                for (Recipe r : rs) {
+                    Log.d("recipe", r.getName());
+                }
+            }
+        }).start();
     }
 
     @Override
@@ -185,6 +213,89 @@ public class My_Pantry extends Fragment {
             return false;
         }
         return true;
+    }
+
+    public ArrayList<Recipe> getRecipes(ArrayList<Item> ingredients) {
+        Log.d("recipe", "getRecipes: started");
+        HttpURLConnection connection = null;
+        StringBuilder queryBuilder = new StringBuilder();
+        queryBuilder.append("https://api.spoonacular.com/recipes/findByIngredients?&number=6&ingredients=");
+        for (Item i : ingredients) {
+            queryBuilder.append(i.getName());
+            queryBuilder.append(',');
+        }
+        queryBuilder.setLength(Math.max(queryBuilder.length() - 1, 0));
+
+        ArrayList<Recipe> recipes = new ArrayList<Recipe>();
+
+        try {
+            // Create connection
+            URL url = new URL(queryBuilder.toString());
+            connection = (HttpURLConnection) url.openConnection();
+            connection.setInstanceFollowRedirects(false);
+            connection.addRequestProperty("x-api-key", "304f6300c57f402e9a62018567e4c6f3");
+            connection.setUseCaches(false);
+            connection.setDoInput(true);
+            connection.setDoOutput(false);
+            Log.d("recipe", "connecting to: " + queryBuilder.toString());
+            connection.setRequestMethod("GET");
+            connection.connect();
+
+            Log.d("recipe", "request method: " + connection.getRequestMethod());
+            Log.d("recipe", "response code: " + connection.getResponseCode());
+
+            // Get Response
+            InputStreamReader inputStreamReader = new InputStreamReader((InputStream) connection.getContent());
+            JsonElement root = JsonParser.parseReader(inputStreamReader);
+            inputStreamReader.close();
+            JsonArray list = root.getAsJsonArray();
+
+            for (JsonElement el : list) {
+                JsonObject o = el.getAsJsonObject();
+                String name = o.get("title").getAsString();
+                URL image = new URL(o.get("image").getAsString());
+                int likes = o.get("likes").getAsInt();
+
+                ArrayList<RecipeItem> missedIngredients = new ArrayList<RecipeItem>();
+                JsonArray mis = o.get("missedIngredients").getAsJsonArray();
+                for (JsonElement mi : mis) {
+                    JsonObject i = mi.getAsJsonObject();
+                    String i_name = i.get("name").getAsString();
+                    URL i_image = new URL(i.get("image").getAsString());
+                    int i_amount = i.get("amount").getAsInt();
+                    String i_aisle = i.get("aisle").getAsString();
+                    String i_unit = i.get("unitLong").getAsString();
+                    String i_diplayName = i.get("original").getAsString();
+
+                    missedIngredients.add(new RecipeItem(i_name, i_image, i_amount, i_aisle, i_unit, i_diplayName));
+                }
+
+                ArrayList<RecipeItem> usedIngredients = new ArrayList<RecipeItem>();
+                JsonArray uis = o.get("usedIngredients").getAsJsonArray();
+                for (JsonElement ui : uis) {
+                    JsonObject i = ui.getAsJsonObject();
+                    String i_name = i.get("name").getAsString();
+                    URL i_image = new URL(i.get("image").getAsString());
+                    int i_amount = i.get("amount").getAsInt();
+                    String i_aisle = i.get("aisle").getAsString();
+                    String i_unit = i.get("unitLong").getAsString();
+                    String i_diplayName = i.get("original").getAsString();
+
+                    usedIngredients.add(new RecipeItem(i_name, i_image, i_amount, i_aisle, i_unit, i_diplayName));
+                }
+
+                recipes.add(new Recipe(name, image, likes, missedIngredients, usedIngredients));
+            }
+
+        } catch (Exception e) {
+            Log.d("recipe", "getRecipes: An Error Occured", e);
+        } finally {
+            if (connection != null){
+                connection.disconnect();
+            }
+        }
+
+        return recipes;
     }
 
 }
