@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -156,6 +157,7 @@ public class Add_Item extends Fragment {
                 }
                 else{
                     Item item_to_add= new Item(item_name,date_added,expiration_date,quantity);
+                    Log.d("AddItem", item_to_add.toString());
                     SIListener.Add_Item(item_to_add);
                 }
 

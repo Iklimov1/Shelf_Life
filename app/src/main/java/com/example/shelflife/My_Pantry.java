@@ -22,7 +22,9 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonNull;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonSerializationContext;
@@ -41,6 +43,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -184,23 +187,20 @@ public class My_Pantry extends Fragment {
                 }
         }
     }
-    @SuppressLint("NewApi")
-    private static final Gson gson = new GsonBuilder()
-            .registerTypeAdapter(LocalDate.class, (JsonDeserializer<LocalDate>) (json, typeOfT, context) -> {
-                if (json.isJsonPrimitive()) {
-                    return LocalDate.parse(json.getAsString());
-                } else {
-                    // Log or handle the case where it's wrong format
-                    Log.e("GSON", "Expected LocalDate as String but got: " + json.toString());
-                    return LocalDate.now(); // fallback date to avoid crashing
-                }
-            })
-            .create();
+
 
 
     public boolean saveItemList(){
         //Gson gson = getGsonWithLocalDate();
+        Gson gson = null;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            gson = new GsonBuilder()
+                   .registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
+                   .create();
+        }
         String json = gson.toJson(itemlist_My_Pantry);
+        Log.d("saveItemList", "saveItemList: " + json);
+
         try{
             FileOutputStream fos = requireActivity().openFileOutput("pantry_items.json", Context.MODE_PRIVATE);
             fos.write(json.getBytes());
@@ -213,6 +213,12 @@ public class My_Pantry extends Fragment {
     }
 
     public List<Item> loadItemList() {
+        Gson gson = null;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            gson = new GsonBuilder()
+                    .registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
+                    .create();
+        }
         List<Item> itemList = new ArrayList<>();
         try {
             FileInputStream fis = requireActivity().openFileInput("pantry_items.json");
@@ -334,4 +340,23 @@ public class My_Pantry extends Fragment {
     }
 
 
+}
+
+
+
+ class LocalDateAdapter implements JsonSerializer<LocalDate>, JsonDeserializer<LocalDate> {
+    @SuppressLint("NewApi")
+    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+    @SuppressLint("NewApi")
+    @Override
+    public JsonElement serialize(LocalDate date, Type typeOfSrc, JsonSerializationContext context) {
+        return date == null ? JsonNull.INSTANCE : new JsonPrimitive(date.format(formatter));
+    }
+
+    @SuppressLint("NewApi")
+    @Override
+    public LocalDate deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+        return json == null ? null : LocalDate.parse(json.getAsString(), formatter);
+    }
 }
