@@ -1,5 +1,6 @@
 package com.example.shelflife;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
@@ -16,10 +17,16 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.google.gson.JsonPrimitive;
+import com.google.gson.JsonSerializationContext;
+import com.google.gson.JsonSerializer;
 import com.google.gson.reflect.TypeToken;
 
 import java.io.BufferedReader;
@@ -35,6 +42,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -79,6 +87,10 @@ public class My_Pantry extends Fragment {
             itemlist_My_Pantry.add(new Item("flour",LocalDate.now(), LocalDate.now(), 4));
             itemlist_My_Pantry.add(new Item("sugar",LocalDate.now(), LocalDate.now(), 4));
         }
+        itemlist_My_Pantry = (ArrayList<Item>) loadItemList(); // Load item list from file
+
+        // Load item list from file
+
 
         // getRecipes method must be called from a separate thread, so that it doesn't throw android.os.NetworkOnMainThreadException
         new Thread(new Runnable() {
@@ -172,9 +184,22 @@ public class My_Pantry extends Fragment {
                 }
         }
     }
+    @SuppressLint("NewApi")
+    private static final Gson gson = new GsonBuilder()
+            .registerTypeAdapter(LocalDate.class, (JsonDeserializer<LocalDate>) (json, typeOfT, context) -> {
+                if (json.isJsonPrimitive()) {
+                    return LocalDate.parse(json.getAsString());
+                } else {
+                    // Log or handle the case where it's wrong format
+                    Log.e("GSON", "Expected LocalDate as String but got: " + json.toString());
+                    return LocalDate.now(); // fallback date to avoid crashing
+                }
+            })
+            .create();
+
 
     public boolean saveItemList(){
-        Gson gson = new Gson();
+        //Gson gson = getGsonWithLocalDate();
         String json = gson.toJson(itemlist_My_Pantry);
         try{
             FileOutputStream fos = requireActivity().openFileOutput("pantry_items.json", Context.MODE_PRIVATE);
@@ -187,33 +212,43 @@ public class My_Pantry extends Fragment {
         return true;
     }
 
-    public boolean loadItemList(){
-        try{
+    public List<Item> loadItemList() {
+        List<Item> itemList = new ArrayList<>();
+        try {
             FileInputStream fis = requireActivity().openFileInput("pantry_items.json");
             InputStreamReader isr = new InputStreamReader(fis);
             BufferedReader reader = new BufferedReader(isr);
-
-            StringBuilder jsonBuilder = new StringBuilder();
+            StringBuilder stringBuilder = new StringBuilder();
             String line;
-            while((line = reader.readLine()) != null){
-                jsonBuilder.append(line);
+
+            while ((line = reader.readLine()) != null) {
+                stringBuilder.append(line);
             }
+
             reader.close();
-            String json = jsonBuilder.toString();
-            Type type = new TypeToken<ArrayList<Item>>(){}.getType();
-            itemlist_My_Pantry = new Gson().fromJson(json, type);
 
+            String json = stringBuilder.toString();
+            if (!json.isEmpty()) {
+                Type type = new TypeToken<List<Item>>() {}.getType();
+                itemList = gson.fromJson(json, type);
+                Log.d("itemListLI", "loadItemList: " + itemList.size() + " items loaded");
+            } else {
+                Log.d("itemListLI", "loadItemList: Empty JSON file");
+            }
 
-        }catch (FileNotFoundException e){
-            e.printStackTrace();
-            itemlist_My_Pantry = new ArrayList<>();
-            return false;
+        } catch (FileNotFoundException e) {
+            Log.d("itemListLI", "loadItemList: No existing file, returning empty list");
         } catch (IOException e) {
             e.printStackTrace();
-            return false;
+        } catch (Exception e) {
+            Log.e("itemListLI", "loadItemList: Failed to parse", e);
         }
-        return true;
+
+
+
+        return itemList;
     }
+
 
     public ArrayList<Recipe> getRecipes(ArrayList<Item> ingredients) {
         Log.d("recipe", "getRecipes: started");
@@ -297,5 +332,6 @@ public class My_Pantry extends Fragment {
 
         return recipes;
     }
+
 
 }

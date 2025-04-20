@@ -3,21 +3,23 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="40dp">
 
     <TextView
         android:id="@+id/Item_output"
         android:layout_width="140dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:textAlignment="center"
+        android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/Date_Added"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:textAlignment="center"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="@+id/Expiration_date"
         app:layout_constraintEnd_toStartOf="@+id/Expiration_date"
         app:layout_constraintStart_toEndOf="@+id/Item_output"
@@ -26,8 +28,9 @@
     <TextView
         android:id="@+id/Expiration_date"
         android:layout_width="140dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:textAlignment="center"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

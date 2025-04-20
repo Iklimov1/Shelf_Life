@@ -37,12 +37,12 @@ public class Item_Adapter extends ArrayAdapter<Item> {
         Item_name.setText(item.getName());
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
 
-            temp = item.getdate_added().getMonth() +" " +item.getdate_added().getDayOfMonth()+" "+item.getdate_added().getYear();
+            temp = item.getdate_added().getMonthValue() +" " +item.getdate_added().getDayOfMonth()+" "+item.getdate_added().getYear();
 
         }
         date_added.setText(temp);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            temp = item.getexpiration_date().getMonth()+" " +item.getexpiration_date().getDayOfMonth()+" "+item.getexpiration_date().getYear();
+            temp = item.getexpiration_date().getMonthValue()+" " +item.getexpiration_date().getDayOfMonth()+" "+item.getexpiration_date().getYear();
         }
         expiration_date.setText(temp);
 

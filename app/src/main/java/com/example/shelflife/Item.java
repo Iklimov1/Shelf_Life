@@ -37,5 +37,15 @@ public class Item implements Serializable {
     public double getquantity(){return quantity;}
     public void setquantity(double quantity){this.quantity = quantity;}
 
+    public String toString(){
+        return "Item{" +
+                "Name='" + Name + '\'' +
+                ", quantity=" + quantity +
+                ", date_added=" + date_added +
+                ", expiration_date=" + expiration_date +
+                ", Comment='" + Comment + '\'' +
+                '}';
+    }
+
 
 }
