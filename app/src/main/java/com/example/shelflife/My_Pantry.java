@@ -96,15 +96,7 @@ public class My_Pantry extends Fragment {
 
 
         // getRecipes method must be called from a separate thread, so that it doesn't throw android.os.NetworkOnMainThreadException
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                ArrayList<Recipe> rs= getRecipes(itemlist_My_Pantry);
-                for (Recipe r : rs) {
-                    Log.d("recipe", r.getName());
-                }
-            }
-        }).start();
+
     }
 
     @Override
