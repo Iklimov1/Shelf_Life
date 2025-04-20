@@ -160,6 +160,7 @@ public class My_Pantry extends Fragment {
     public void Edit_item(Item oldItem, Item newItem) {
         itemlist_My_Pantry.remove(oldItem);
         itemlist_My_Pantry.add(newItem);
+        saveItemList();
         expiration_toast(itemlist_My_Pantry);
 
     }
