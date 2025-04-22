@@ -1,6 +1,7 @@
 package com.example.shelflife;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
@@ -92,13 +93,18 @@ public class Recipe_List extends Fragment {
 
                     TextView recipeName = recipeItemView.findViewById(R.id.recipe_name);
                     ImageView recipeImage = recipeItemView.findViewById(R.id.recipe_image);
+                    String imageS = r.getImage().toString();
+                    Log.d("IMG", imageS);
 
                     recipeName.setText(r.getName());
                     new Thread(() -> {
                         try {
                             InputStream in = r.getImage().openStream();
+                            Bitmap bitmap = BitmapFactory.decodeStream(in); // decode in background
+                            in.close(); // Close it after decoding
+
                             requireActivity().runOnUiThread(() -> {
-                                recipeImage.setImageBitmap(BitmapFactory.decodeStream(in));
+                                recipeImage.setImageBitmap(bitmap); // Now just set the bitmap
                             });
                         } catch (Exception e) {
                             e.printStackTrace();
