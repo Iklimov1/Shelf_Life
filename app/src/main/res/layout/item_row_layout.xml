@@ -1,36 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="40dp">
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="6dp"
+    android:layout_marginTop="15dp"
+    android:layout_marginBottom="20dp"
+    >
 
-    <TextView
-        android:id="@+id/Item_output"
-        android:layout_width="140dp"
-        android:layout_height="0dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp">
 
-    <TextView
-        android:id="@+id/Date_Added"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="@+id/Expiration_date"
-        app:layout_constraintEnd_toStartOf="@+id/Expiration_date"
-        app:layout_constraintStart_toEndOf="@+id/Item_output"
-        app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/Item_output"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_weight="1"
+            android:text="Item"
+            android:textAlignment="center"
+            android:textColor="#333333"
+            android:textSize="22sp" />
 
-    <TextView
-        android:id="@+id/Expiration_date"
-        android:layout_width="140dp"
-        android:layout_height="0dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/Date_Added"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_weight="1"
+            android:text="Added"
+            android:textAlignment="center"
+            android:textColor="#333333"
+            android:textSize="22sp" />
+
+        <TextView
+            android:id="@+id/Expiration_date"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_weight="1"
+            android:text="Expires"
+            android:textAlignment="center"
+            android:textColor="#333333"
+            android:textSize="22sp" />
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

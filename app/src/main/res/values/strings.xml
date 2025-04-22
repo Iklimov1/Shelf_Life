@@ -30,4 +30,7 @@
     <string name="item_name_edit">Item Name</string>
     <string name="textview_edit">TextView</string>
     <string name="eDate" > Expiration Date:</string>
+    <string name="item">Item</string>
+    <string name="added">Added</string>
+    <string name="expires">Expires</string>
 </resources>

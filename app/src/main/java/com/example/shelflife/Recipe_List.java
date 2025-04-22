@@ -1,8 +1,10 @@
 package com.example.shelflife;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -93,6 +95,19 @@ public class Recipe_List extends Fragment {
 
                     TextView recipeName = recipeItemView.findViewById(R.id.recipe_name);
                     ImageView recipeImage = recipeItemView.findViewById(R.id.recipe_image);
+                    recipeImage.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            String url = r.getImage().toString();
+                            String title = r.getName();
+                           String link =  r.generateLinkFromImage(url, title);
+                            Log.d("LINK", "onClick: " + link);
+                            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(link));
+                            startActivity(intent);
+
+
+                        }
+                    });
                     String imageS = r.getImage().toString();
                     Log.d("IMG", imageS);
 
@@ -208,7 +223,7 @@ public class Recipe_List extends Fragment {
             }
 
         } catch (Exception e) {
-            Log.d("recipe", "getRecipes: An Error Occured", e);
+            Log.d("recipe", "getRecipes: An Error Occurred", e);
         } finally {
             if (connection != null){
                 connection.disconnect();

@@ -84,12 +84,7 @@ public class My_Pantry extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Example ingredients, remove in production
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            itemlist_My_Pantry.add(new Item("apples",LocalDate.now(), LocalDate.now(), 4));
-            itemlist_My_Pantry.add(new Item("flour",LocalDate.now(), LocalDate.now(), 4));
-            itemlist_My_Pantry.add(new Item("sugar",LocalDate.now(), LocalDate.now(), 4));
-        }
+
         itemlist_My_Pantry = (ArrayList<Item>) loadItemList(); // Load item list from file
 
         // Load item list from file

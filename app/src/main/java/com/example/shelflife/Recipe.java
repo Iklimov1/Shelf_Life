@@ -9,6 +9,7 @@ public class Recipe implements Serializable {
     private String Name;
     private URL Image;
     private int Likes;
+    private  String url;
     private ArrayList<RecipeItem> MissingIngredients;
     private ArrayList<RecipeItem> UsedIngredients;
 
@@ -20,6 +21,40 @@ public class Recipe implements Serializable {
         this.MissingIngredients = missingIngredients;
         this.UsedIngredients = usedIngredients;
 
+    }
+
+    public Recipe(String name, URL image, int likes, ArrayList<RecipeItem> missingIngredients, ArrayList<RecipeItem> usedIngredients, String url){
+        this.Name = name;
+        this.url = url;
+        this.Image = image;
+        this.Likes = likes;
+        this.MissingIngredients = missingIngredients;
+        this.UsedIngredients = usedIngredients;
+
+    }
+
+
+    public String generateLinkFromImage(String imageUrl, String title) {
+        try {
+            String id = imageUrl.substring(imageUrl.lastIndexOf('/') + 1, imageUrl.indexOf('-'));
+            String cleanTitle = title.toLowerCase().replace(' ', '-');
+            return "https://spoonacular.com/recipes/" + cleanTitle + "-" + id;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "https://spoonacular.com"; // fallback
+        }
+    }
+
+
+
+
+
+
+    public String getUrl(){
+        return this.url;
+    }
+    public void setUrl(String url){
+        this.url = url;
     }
     public String getName(){
         return Name;
