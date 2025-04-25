@@ -26,7 +26,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Item_Adapter extends ArrayAdapter<Item> {
-    private static final String UNSPLASH_API_KEY = "iX-lbMVljKd1tVNr9eGrPHrdIg9FSLmBF5MliddFyK8";  // Replace with your Unsplash API key
+    private static final String UNSPLASH_API_KEY = "iX-lbMVljKd1tVNr9eGrPHrdIg9FSLmBF5MliddFyK8";
     private static final String BASE_URL = "https://api.unsplash.com/";
     private final HashMap<String, String> imageUrlCache = new HashMap<>();
     public Item_Adapter(@NonNull Context context, int resource, @NonNull List<Item> objects) {
@@ -91,7 +91,7 @@ public class Item_Adapter extends ArrayAdapter<Item> {
             public void onResponse(Call<UnsplashResponse> call, Response<UnsplashResponse> response) {
                 if (response.isSuccessful() && response.body() != null && !response.body().results.isEmpty()) {
                     String imageUrl = response.body().results.get(0).urls.small;
-                    imageUrlCache.put(foodName, imageUrl);  // Cache it
+                    imageUrlCache.put(foodName, imageUrl);  // Cache the image URL
                     Glide.with(getContext())
                             .load(imageUrl)
                             .placeholder(R.drawable.placeholder)

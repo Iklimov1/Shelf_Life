@@ -105,7 +105,6 @@ public class My_Pantry extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         Item_List = view.findViewById(R.id.listView);
-       // loadItemList();
 
         adapter = new Item_Adapter(requireActivity(),R.layout.item_row_layout,itemlist_My_Pantry);
         Item_List.setAdapter(adapter);

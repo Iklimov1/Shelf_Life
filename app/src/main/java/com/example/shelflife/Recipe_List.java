@@ -82,7 +82,7 @@ public class Recipe_List extends Fragment {
                 }
             }
         }).start();
-        LinearLayout recipeContainer = view.findViewById(R.id.recipe_container_layout);  // ID of the LinearLayout inside your ScrollView
+        LinearLayout recipeContainer = view.findViewById(R.id.recipe_container_layout);
 
         new Thread(() -> {
             ArrayList<Recipe> rs = getRecipes(Items_to_check);
@@ -119,7 +119,7 @@ public class Recipe_List extends Fragment {
                             in.close(); // Close it after decoding
 
                             requireActivity().runOnUiThread(() -> {
-                                recipeImage.setImageBitmap(bitmap); // Now just set the bitmap
+                                recipeImage.setImageBitmap(bitmap); // set the bitmap
                             });
                         } catch (Exception e) {
                             e.printStackTrace();

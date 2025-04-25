@@ -10,6 +10,7 @@ public class Item implements Serializable {
     private LocalDate date_added;
     private LocalDate expiration_date;
     private String Comment;
+    private  String imageUrl;
 
     public Item(String name, LocalDate date_added, LocalDate expiration_date,double quantity ){
         this.Name = name;
@@ -18,6 +19,21 @@ public class Item implements Serializable {
         this.expiration_date = expiration_date;
         this.quantity = quantity;
 
+    }
+    public Item(String name, LocalDate date_added, LocalDate expiration_date,double quantity,String imageUrl){
+        this.imageUrl=imageUrl;
+        this.Name = name;
+        this.date_added = date_added;
+        this.expiration_date = expiration_date;
+        this.quantity = quantity;
+        this.Comment=Comment;
+
+    }
+    public String getImageUrl() {
+        return imageUrl;
+    }
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
     public String getName(){
         return this.Name;
