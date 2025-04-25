@@ -16,6 +16,7 @@ import androidx.annotation.Nullable;
 
 import com.bumptech.glide.Glide;
 
+import java.util.HashMap;
 import java.util.List;
 
 import retrofit2.Call;
@@ -27,7 +28,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class Item_Adapter extends ArrayAdapter<Item> {
     private static final String UNSPLASH_API_KEY = "iX-lbMVljKd1tVNr9eGrPHrdIg9FSLmBF5MliddFyK8";  // Replace with your Unsplash API key
     private static final String BASE_URL = "https://api.unsplash.com/";
-
+    private final HashMap<String, String> imageUrlCache = new HashMap<>();
     public Item_Adapter(@NonNull Context context, int resource, @NonNull List<Item> objects) {
         super(context, resource, objects);
     }
@@ -39,6 +40,9 @@ public class Item_Adapter extends ArrayAdapter<Item> {
 
             convertView= LayoutInflater.from(getContext()).inflate(R.layout.item_row_layout,parent,false);
         }
+
+
+
         Item item = getItem(position);
         TextView Item_name = convertView.findViewById(R.id.item_output);
         ImageView item_image = convertView.findViewById(R.id.item_image);
@@ -63,6 +67,16 @@ public class Item_Adapter extends ArrayAdapter<Item> {
 
 
     private void fetchFoodImage(String foodName, ImageView imageView) {
+
+        if (imageUrlCache.containsKey(foodName)) {
+            Glide.with(getContext())
+                    .load(imageUrlCache.get(foodName))
+                    .placeholder(R.drawable.placeholder)
+                    .override(150,150)
+                    .centerCrop()
+                    .into(imageView);
+            return;
+        }
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -75,17 +89,20 @@ public class Item_Adapter extends ArrayAdapter<Item> {
         call.enqueue(new Callback<UnsplashResponse>() {
             @Override
             public void onResponse(Call<UnsplashResponse> call, Response<UnsplashResponse> response) {
-                if (response.isSuccessful() && response.body() != null && response.body().results.size() > 0) {
-                    // Get the URL of the first image in the results
+                if (response.isSuccessful() && response.body() != null && !response.body().results.isEmpty()) {
                     String imageUrl = response.body().results.get(0).urls.small;
+                    imageUrlCache.put(foodName, imageUrl);  // Cache it
                     Glide.with(getContext())
                             .load(imageUrl)
-                            .placeholder(R.drawable.placeholder)  // Use placeholder while loading
+                            .placeholder(R.drawable.placeholder)
+                            .override(150,150)
+                            .centerCrop()
                             .into(imageView);
                 } else {
-                    // Handle the case where no image is found, use a fallback or placeholder image
                     Glide.with(getContext())
                             .load(R.drawable.placeholder)
+                            .override(150,150)
+                            .centerCrop()
                             .into(imageView);
                 }
             }
@@ -96,6 +113,8 @@ public class Item_Adapter extends ArrayAdapter<Item> {
                 // Fallback to placeholder image in case of failure
                 Glide.with(getContext())
                         .load(R.drawable.placeholder)
+                        .override(150,150)
+                        .centerCrop()
                         .into(imageView);
             }
         });
