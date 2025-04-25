@@ -32,5 +32,5 @@
     <string name="eDate" > Expiration Date:</string>
     <string name="item">Item</string>
     <string name="added">Added</string>
-    <string name="expires">Expires</string>
+    <string name="expires">Expires:</string>
 </resources>

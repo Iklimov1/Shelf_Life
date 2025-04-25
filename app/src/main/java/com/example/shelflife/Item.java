@@ -20,7 +20,7 @@ public class Item implements Serializable {
 
     }
     public String getName(){
-        return Name;
+        return this.Name;
     }
     public void setName(String Name){
         this.Name=Name;

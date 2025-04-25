@@ -95,7 +95,7 @@ public class Recipe_List extends Fragment {
 
                     TextView recipeName = recipeItemView.findViewById(R.id.recipe_name);
                     ImageView recipeImage = recipeItemView.findViewById(R.id.recipe_image);
-                    recipeImage.setOnClickListener(new View.OnClickListener() {
+                    recipeItemView.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
                             String url = r.getImage().toString();
