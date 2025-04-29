@@ -47,6 +47,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.time.temporal.ChronoUnit;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -169,9 +170,9 @@ public class My_Pantry extends Fragment {
         int checker = 0;
         for(int i = 0; i<Items_to_check.size();i++){
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                checker = Items_to_check.get(i).getexpiration_date().compareTo(LocalDate.now());
+                checker = (int)ChronoUnit.DAYS.between(LocalDate.now(),Items_to_check.get(i).getexpiration_date());
             }
-            if(checker <= 7){
+            if(checker <= 3){
                 Toast.makeText(getActivity(), "Warning! " + Items_to_check.get(i).getName() + " is about to expire!", Toast.LENGTH_SHORT).show();
                 }
         }
